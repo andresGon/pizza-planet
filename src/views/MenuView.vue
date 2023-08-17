@@ -1,33 +1,17 @@
 <script setup>
-import { ref } from 'vue'
-import useBasket from '@/composables/useBasket'
+import useBasket from '@/composables/useBasket';
+import usePizzas from '../composables/usePizzas';
 
+const { allPizzas } = usePizzas();
 const{ basket, increaseQuantity, decreaseQuantity, addToBasket, total } = useBasket();
-const allPizzas = ref([
-    {
-        name: "Margherita",
-        description: "A delicious tomato based pizza topped with mozzarella",
-        options: [
-            { size: 9, price: 6.95},
-            { size:12, price: 12.95}
-        ]
-    },
-    {
-        name: "Pepperoni",
-        description: "A delicious tomato based pizza topped with mozzarella & pepperoni",
-        options: [
-            { size: 9, price: 7.95},
-            { size:12, price: 13.95}
-        ]
-    }
-])
+
 </script>
 <template>
     <div class="menu_wrapper">
         <div class="menu">
             <h3>== Authentic handmade piza ==</h3>
             <table>
-                <tbody v-for="(pizza, index) in allPizzas"  :key="index">
+                <tbody v-for="pizza in allPizzas"  :key="pizza.id">
                     <tr>
                         <td>
                             <strong>= {{ pizza.name }} =</strong>
@@ -40,7 +24,7 @@ const allPizzas = ref([
                             </small>
                         </td>
                     </tr>
-                    <tr v-for="(option, index) in pizza.options" :key="option[index]">
+                    <tr v-for="option in pizza.options" :key="pizza.id + option.size">
                         <td> {{ option.size }}</td>
                         <td>{{ option.price }}</td>
                         <td>
